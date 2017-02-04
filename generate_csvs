@@ -1,0 +1,11 @@
+# parallelsearch csv
+sqlite3 -header -csv biblecrawler.s3db "select HebLemma, MTVerseID, MTSTartSequence, MTEndSequence, GrkLemma, LXXVerseID, LXXPhrase from parallelsearch" > parallelsearch.csv
+
+# tfdata
+ # within biblecrawler.s3db
+create table tfdata as select RecordId, HebrewText, HebLemma, SDBH, 
+LexDomain from mtmorph;
+alter table tfdata add column GLemma;
+ # exit and...
+sqlite3 -header -csv biblecrawler.s3db "select * from tfdata" > 
+tfdata.csv
